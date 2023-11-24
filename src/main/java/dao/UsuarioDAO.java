@@ -67,7 +67,6 @@ public class UsuarioDAO {
     }
 
 
-
     public UsuarioModel buscarPorId(int id) {
         UsuarioModel p = new UsuarioModel();
 
@@ -82,14 +81,13 @@ public class UsuarioDAO {
 
             ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 p.setId(resultSet.getInt("id"));
                 p.setNome(resultSet.getString("nome"));
             }
             return p;
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.toString());
             return null;
         }
@@ -112,31 +110,51 @@ public class UsuarioDAO {
             conn.close();
 
             return model;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
 
+    public static boolean atualizarSenha(UsuarioModel usuario) {
+        try {
+            Connection conn = new Conexao().conectar();
+
+            PreparedStatement statement = conn
+                    .prepareStatement("update usuarios set senha=? where id=?");
+
+            statement.setString(1, usuario.getSenha());
+            System.out.println("senha: " + usuario.getSenha());
+            statement.setInt(2, usuario.getId());
+            System.out.println("id: " + usuario.getId());
+            int qtdLinhas = statement.executeUpdate();
+
+            conn.close();
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     public static UsuarioModel login(String email, String senha) {
         UsuarioModel p = new UsuarioModel();
 
         try {
+
             Connection conn = new Conexao().conectar();
 
             PreparedStatement statement = conn
-                    .prepareStatement("select * from usruarios where email=?");
+                    .prepareStatement("select * from usuarios where email=? and status = 1");
 
             statement.setString(1, email);
-
-
+            System.out.println(222);
             ResultSet resultSet = statement.executeQuery();
-
-            if(resultSet.next()) {
-
-                if(BCrypt.checkpw(senha, resultSet.getString("senha"))) {
+            System.out.println(333);
+            if (resultSet.next()) {
+                System.out.println(resultSet.getString("senha"));
+                if (BCrypt.checkpw(senha, resultSet.getString("senha"))) {
                     p.setId(resultSet.getInt("id"));
+                    System.out.println(resultSet.getInt("id"));
                     p.setNome(resultSet.getString("nome"));
                 }
 
@@ -145,11 +163,11 @@ public class UsuarioDAO {
             conn.close();
 
             return p;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
+
     public static UsuarioModel listarPorEmail(String email) {
         try {
             Connection conn = new Conexao().conectar();
@@ -160,22 +178,37 @@ public class UsuarioDAO {
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                System.out.println("O email já está cadastrado");
                 user.setId(resultSet.getInt("id"));
                 user.setNome(resultSet.getString("nome"));
                 user.setEmail(resultSet.getString("email"));
                 user.setSenha(resultSet.getString("senha"));
                 return user;
             } else {
-                System.out.println("Email cadastrado com sucesso");
                 return null;
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-    }
 
+    public static boolean ativaUsuario(UsuarioModel usuario) {
+        try {
+            Connection conn = new Conexao().conectar();
+
+            PreparedStatement statement = conn.prepareStatement("update usuarios set status = 1 where id = ?");
+
+            statement.setInt(1, usuario.getId());
+
+            statement.execute();
+
+            conn.close();
+
+            return true;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+}

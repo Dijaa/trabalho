@@ -24,6 +24,13 @@
 <div class="bg-white p-8 rounded shadow-md w-96">
     <div id="loginForm">
         <h2 class="text-2xl font-bold mb-8 text-center">Login </h2>
+        <% if ("login".equals(request.getAttribute("type"))) { %>
+
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Erro!</strong>
+            <span class="block sm:inline"><%=request.getAttribute("error")%></span>
+        </div>
+        <% } %>
         <form
                 action="<%=request.getContextPath()%>/login"
                 method="post"

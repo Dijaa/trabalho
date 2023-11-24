@@ -29,14 +29,13 @@ public class AutenticacaoController extends HttpServlet {
         if (acao.equals("/logout")) {
             HttpSession session = request.getSession();
             session.invalidate();
-            response.sendRedirect("login.jsp");
+            response.sendRedirect( request.getContextPath());
         }
     }
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String acao = request.getServletPath();
-
         if (acao.equals("/login")) {
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
@@ -49,10 +48,12 @@ public class AutenticacaoController extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("usuario", usuario);
 
-                response.sendRedirect("admin/");
+                response.sendRedirect("authArea/index.jsp");
             }
             else {
-                response.sendRedirect("login.jsp");
+            request.setAttribute("type","login");
+            request.setAttribute("error","Email ou senha inválidos");
+            request.getRequestDispatcher("/").forward(request, response);
             }
         }
 

@@ -1,8 +1,7 @@
 package model;
-import  controller.UsuarioController;
 import dao.UsuarioDAO;
 
-public class tokenModel {
+public class TokenModel {
     private Integer id;
     private Integer usuario_id;
     private UsuarioModel usuario;
