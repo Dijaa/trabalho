@@ -29,24 +29,29 @@ public class UsuarioModel {
         this.nome = nome;
     }
 
-    public void setSenha(String senha){
-        this.senha = senha;
-    }
 
-    public String getSenha(){
+    public String getSenha() {
         return senha;
     }
 
-    public void setEmail(String email){
-        this.email = email;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
     public String toString() {
-        return "Usuario [id=" + id + ", nome=" + nome + "]";
+        return "UsuarioModel [id=" + id + ", nome=" + nome + ", email=" + email + "]";
     }
+
+
+
+
 }
