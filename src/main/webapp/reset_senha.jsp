@@ -21,7 +21,7 @@
     <% } else { %>
     <h2 class="text-2xl font-bold mb-8">Definir Nova Senha</h2>
     <form method="post" action="<%=request.getContextPath()%>/reset">
-        <label for="novaSenha" class="block text-left text-sm font-medium text-gray-600">Nova Senha</label>
+        <label for="senha" class="block text-left text-sm font-medium text-gray-600">Nova Senha</label>
         <input type="password" id="senha" name="senha" required class="w-full px-3 py-2 mb-4 border rounded-md">
 
 
