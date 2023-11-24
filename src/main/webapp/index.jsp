@@ -78,6 +78,17 @@
             >Registrar</a
             >
         </p>
+        <p class="text-center">
+
+            <a
+                href="recupera_senha.jsp"
+                id="showRecuperationForm"
+                class="text-indigo-600 hover:text-indigo-500">Esqueceu sua senha</a
+            >
+        </p>
+    </div>
+    <div id="RecuperationForm" class="hidden">
+        <h2 class="text-2xl font-bold mb-8 text-center">Recuperar Senha</h2>
     </div>
     <div id="registerForm" class="hidden">
         <h2 class="text-2xl font-bold mb-8 text-center">Registrar</h2>
@@ -160,6 +171,8 @@
     document
         .getElementById("showLoginForm")
         .addEventListener("click", login);
+
+
 </script>
 </body>
 </html>
