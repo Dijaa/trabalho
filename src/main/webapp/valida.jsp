@@ -21,7 +21,7 @@
         <img src="./src/img/winners-animate.svg">
         <p class="mt-4">
             Usuário validado com sucesso! <br>
-            <a href="<%=request.getContextPath()%>/login" class="text-indigo-600 hover:text-indigo-500">Ir para o login</a>
+            <a href="<%=request.getContextPath()%>/" class="text-indigo-600 hover:text-indigo-500">Ir para o login</a>
         </p>
     </div>
     <% } else { %>
