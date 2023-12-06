@@ -51,7 +51,4 @@ public class UsuarioModel {
         return "UsuarioModel [id=" + id + ", nome=" + nome + ", email=" + email + "]";
     }
 
-
-
-
 }

@@ -35,7 +35,7 @@ public class AuthFilter extends HttpFilter implements Filter {
 
         boolean estaLogado = (session != null && session.getAttribute("usuario") != null);
 
-        String urlLogin = httpRequest.getContextPath() + "/login";
+        String urlLogin = httpRequest.getContextPath() + "/index.jsp";
 
         boolean eRequisicaoLogin = httpRequest.getRequestURI().equals(urlLogin);
 

@@ -1,4 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String currentURL = request.getRequestURL().toString();
+    String targetURL = request.getContextPath();
+
+    if (currentURL.equals("http://localhost:8080/trabalho_war_exploded/index.jsp")) {
+        response.sendRedirect(targetURL);
+    }
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
