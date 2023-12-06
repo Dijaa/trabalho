@@ -154,14 +154,19 @@ public class UsuarioDAO {
                 System.out.println(resultSet.getString("senha"));
                 if (BCrypt.checkpw(senha, resultSet.getString("senha"))) {
                     p.setId(resultSet.getInt("id"));
+                    p.setEmail(resultSet.getString("email"));
                     System.out.println(resultSet.getInt("id"));
                     p.setNome(resultSet.getString("nome"));
+                    System.out.println(444);
+                    System.out.println(resultSet.getInt("tipo"));
+                    p.setTipo(resultSet.getInt("tipo"));
+                    System.out.println(p);
                 }
 
             }
 
             conn.close();
-
+            System.out.println(p);
             return p;
         } catch (Exception e) {
             return null;

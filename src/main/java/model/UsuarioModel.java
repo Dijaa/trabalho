@@ -9,6 +9,7 @@ public class UsuarioModel {
     private String senha;
 
     private String email;
+    private int tipo;
 
     public UsuarioModel() {
     }
@@ -25,6 +26,13 @@ public class UsuarioModel {
         return nome;
     }
 
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -48,7 +56,7 @@ public class UsuarioModel {
 
     @Override
     public String toString() {
-        return "UsuarioModel [id=" + id + ", nome=" + nome + ", email=" + email + "]";
+        return "UsuarioModel [id=" + id + ", nome=" + nome + ", email=" + email + ", tipo=" + tipo + "]";
     }
 
 }

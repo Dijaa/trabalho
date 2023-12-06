@@ -14,9 +14,13 @@
 <div class="bg-white p-8 rounded shadow-md w-96 text-center">
     <h2 class="text-2xl font-bold mb-8">Upload de Arquivo</h2>
     <form method="post" action="<%=request.getContextPath()%>/upload" enctype="multipart/form-data">
-        <label for="file" class="block text-left text-sm font-medium text-gray-600">Escolha um arquivo</label>
-        <input type="file" id="file" name="file" required class="w-full px-3 py-2 mb-4 border rounded-md" accept="application/pdf">
-        <button type="submit" class="bg-indigo-500 text-white px-4 py-2 rounded">Enviar</button>
+        <form method="post" action="<%=request.getContextPath()%>/upload" enctype="multipart/form-data">
+            <label for="filename" class="block text-left text-sm font-medium text-gray-600">Nome do arquivo</label>
+            <input type="text" id="filename" name="filename" required class="w-full px-3 py-2 mb-4 border rounded-md">
+            <label for="file" class="block text-left text-sm font-medium text-gray-600">Escolha um arquivo</label>
+            <input type="file" id="file" name="file" required class="w-full px-3 py-2 mb-4 border rounded-md" accept="application/pdf">
+            <button type="submit" class="bg-indigo-500 text-white px-4 py-2 rounded">Enviar</button>
+        </form>
     </form>
     <br>
     <a href="<%=request.getContextPath()%>" class="text-indigo-600 hover:text-indigo-500">Voltar para o início</a>
