@@ -12,9 +12,12 @@
 </head>
 <body class="bg-gray-200 flex items-center justify-center h-screen">
 <div class="bg-white p-8 rounded shadow-md w-96 text-center">
-    <h2 class="text-2xl font-bold mb-8">Upload Bem-Sucedido</h2>
-    <p class="mb-4">Seu arquivo foi enviado com sucesso!</p>
-    <a href="<%=request.getContextPath()%>" class="bg-indigo-500 text-white px-4 py-2 rounded">Voltar para o início</a>
+    <h2 class="text-2xl font-bold mb-8"><%= request.getAttribute("title") %></h2>
+    <p class="mb-4"><%= request.getAttribute("message") %></p>
+
+
+    <a href="<%=request.getContextPath()%>/authArea" class="bg-indigo-500 text-white px-4 py-2 rounded">Voltar para o início</a>
+
 </div>
 </body>
 </html>

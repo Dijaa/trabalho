@@ -10,10 +10,17 @@ public class FileModel {
     private int aprovador_id;
     private UsuarioModel aprovador;
     private int status;
+    private String token;
+    private String obs;
 
     public FileModel() {
     }
-
+    public void setObs(String obs) {
+        this.obs = obs;
+    }
+    public String getObs() {
+        return this.obs;
+    }
     public void setId(int id) {
         this.id = id;
     }
@@ -76,6 +83,13 @@ public void setAprovador(UsuarioModel aprovador) {
 
     public int getStatus() {
         return this.status;
+    }
+
+    public String getToken() {
+        return this.token;
+    }
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

@@ -216,4 +216,84 @@ public class UsuarioDAO {
             return false;
         }
     }
+
+    public static UsuarioModel randomizaAprovador(UsuarioModel requerente) {
+        try {
+            Connection conn = new Conexao().conectar();
+            UsuarioModel user = new UsuarioModel();
+            int id = requerente.getId();
+            if (countAprovador() == 1) {
+                PreparedStatement statement = conn.prepareStatement("SELECT * FROM usuarios WHERE tipo=1 LIMIT 1");
+
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    user.setId(resultSet.getInt("id"));
+                    user.setNome(resultSet.getString("nome"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setSenha(resultSet.getString("senha"));
+                    return user;
+                } else {
+                    return null;
+                }
+            } else {
+                PreparedStatement statement = conn.prepareStatement("SELECT * FROM usuarios WHERE tipo=1 AND id != ? ORDER BY RAND() LIMIT 1");
+                statement.setInt(1, id);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    user.setId(resultSet.getInt("id"));
+                    user.setNome(resultSet.getString("nome"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setSenha(resultSet.getString("senha"));
+                    return user;
+                } else {
+                    return null;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static int countAprovador() {
+        try {
+            Connection conn = new Conexao().conectar();
+            PreparedStatement statement = conn.prepareStatement("SELECT COUNT(*) FROM usuarios WHERE tipo=1");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public static UsuarioModel buscaById(int id) {
+        try {
+            Connection conn = new Conexao().conectar();
+            UsuarioModel user = new UsuarioModel();
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM usuarios WHERE id=?");
+
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user.setId(resultSet.getInt("id"));
+                user.setNome(resultSet.getString("nome"));
+                user.setEmail(resultSet.getString("email"));
+                user.setSenha(resultSet.getString("senha"));
+                return user;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

@@ -1,10 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="model.UsuarioModel" %>
 <%
     String currentURL = request.getRequestURL().toString();
     String targetURL = request.getContextPath();
 
     if (currentURL.equals("http://localhost:8080/trabalho_war_exploded/index.jsp")) {
         response.sendRedirect(targetURL);
+    }
+%>
+<%
+    UsuarioModel usuario = (UsuarioModel) session.getAttribute("usuario");
+    if (usuario != null) {
+        response.sendRedirect(targetURL + "/authArea");
     }
 %>
 <!DOCTYPE html>
