@@ -40,7 +40,7 @@ public class FileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String acao = request.getServletPath();
-        if(acao.equals("aproveOrDisaprove")){
+        if(acao.equals("/aproveOrDisaprove")){
             int id = Integer.parseInt(request.getParameter("id"));
             int status = Integer.parseInt(request.getParameter("aprove"));
             int finalStatus = status == 0 ? 2 : 1;
@@ -48,13 +48,16 @@ public class FileController extends HttpServlet {
             file.setStatus(finalStatus);
             boolean result = FileDAO.update(file);
             if (result) {
-                request.getRequestDispatcher("authArea/file/obs.jsp?id="+id).forward(request, response);
+                request.setAttribute("message", "Arquivo Aprovado com Sucesso");
+                request.setAttribute("title", "Aprovação Bem Sucedida");
+                request.setAttribute("success", true);
             } else {
                 request.setAttribute("message", "Ocorreu um Erro na Aprovação do Arquivo");
                 request.setAttribute("title", "Aprovação Falhou");
                 request.setAttribute("success", false);
-                request.getRequestDispatcher("authArea/confirm.jsp").forward(request, response);
             }
+            request.getRequestDispatcher("authArea/confirm.jsp").forward(request, response);
+
         }
 
 
