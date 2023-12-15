@@ -34,11 +34,11 @@
             <p><strong>Usuario:</strong> <%= documento.getUsuario().getNome() %>
             </p>
             <div>
-                <a href="<%=request.getContextPath()%>/aproveOrDisaprove.jsp?id=<%= documento.getId() %>&aprove=0"
+                <a href="<%=request.getContextPath()%>/authArea/files/reprove.jsp?id=<%= documento.getId() %>&aprove=0"
                    class="text-indigo-600 hover:text-indigo-500 hover:bg-gray-200 px-2 py-1 rounded">Reprovar</a>
             </div>
             <div>
-                <a href="<%=request.getContextPath()%>/aproveOrDisaprove.jsp?id=<%= documento.getId() %>&aprove=1"
+                <a href="<%=request.getContextPath()%>/authArea/files/aprove.jsp?id=<%= documento.getId() %>&aprove=1"
                    class="text-indigo-600 hover:text-indigo-500 hover:bg-gray-200 px-2 py-1 rounded">Aprovar</a>
             </div>
             <div>

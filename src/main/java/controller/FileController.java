@@ -30,7 +30,7 @@ import model.UsuarioModel;
 import util.MailUtil;
 import util.SenhaUtil;
 
-@WebServlet(urlPatterns = {"/upload", "/download", "/deleteDocument", "/aproveOrDisaprove"})
+@WebServlet(urlPatterns = {"/upload", "/download", "/deleteDocument", "/reprove", "/aprove"})
 public class FileController extends HttpServlet {
 
     public FileController() {
@@ -40,7 +40,7 @@ public class FileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String acao = request.getServletPath();
-        if(acao.equals("/aproveOrDisaprove")){
+       /* if(acao.equals("/aproveOrDisaprove")){
             int id = Integer.parseInt(request.getParameter("id"));
             int status = Integer.parseInt(request.getParameter("aprove"));
             int finalStatus = status == 0 ? 2 : 1;
@@ -58,7 +58,7 @@ public class FileController extends HttpServlet {
             }
             request.getRequestDispatcher("authArea/confirm.jsp").forward(request, response);
 
-        }
+        }*/
 
 
         if (acao.equals("/deleteDocument")) {
@@ -139,7 +139,43 @@ public class FileController extends HttpServlet {
             throws ServletException, IOException {
         String acao = request.getServletPath();
 
+        if (acao.equals("/reprove")){
+            int id = Integer.parseInt(request.getParameter("id"));
+            String observacao = request.getParameter("observacao");
+            FileModel file = FileDAO.buscarById(id);
+            file.setStatus(2);
+            file.setObs(observacao);
+            boolean result = FileDAO.AproveOrReprove(file);
+            if (result) {
+                request.setAttribute("message", "Arquivo Reprovado com Sucesso");
+                request.setAttribute("title", "Reprovação Bem Sucedida");
+                request.setAttribute("success", true);
+            } else {
+                request.setAttribute("message", "Ocorreu um Erro na Reprovação do Arquivo");
+                request.setAttribute("title", "Reprovação Falhou");
+                request.setAttribute("success", false);
+            }
+            request.getRequestDispatcher("authArea/confirm.jsp").forward(request, response);
+        }
 
+        if(acao.equals("/aprove")){
+            int id = Integer.parseInt(request.getParameter("id"));
+            String observacao = request.getParameter("observacao");
+            FileModel file = FileDAO.buscarById(id);
+            file.setStatus(1);
+            file.setObs(observacao);
+            boolean result = FileDAO.AproveOrReprove(file);
+            if (result) {
+                request.setAttribute("message", "Arquivo Aprovado com Sucesso");
+                request.setAttribute("title", "Aprovação Bem Sucedida");
+                request.setAttribute("success", true);
+            } else {
+                request.setAttribute("message", "Ocorreu um Erro na Aprovação do Arquivo");
+                request.setAttribute("title", "Aprovação Falhou");
+                request.setAttribute("success", false);
+            }
+            request.getRequestDispatcher("authArea/confirm.jsp").forward(request, response);
+        }
 
         if (acao.equals("/upload")) {
 

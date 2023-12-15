@@ -196,13 +196,13 @@ public class FileDAO {
         }
     }
 
-    public static boolean update(FileModel file) {
+    public static boolean AproveOrReprove(FileModel file) {
         try {
             Connection conn = new Conexao().conectar();
-            PreparedStatement statement = conn.prepareStatement("update arquivos set status = ? where id = ?");
+            PreparedStatement statement = conn.prepareStatement("update arquivos set status = ?, obs = ? where id = ?");
             statement.setInt(1, file.getStatus());
-            statement.setInt(2, file.getId());
-            statement.setString(3, file.getObs());
+            statement.setString(2, file.getObs());
+            statement.setInt(3, file.getId());
             boolean retorno = statement.execute();
             if (retorno == false) {
                 conn.close();
