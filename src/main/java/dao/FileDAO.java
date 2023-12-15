@@ -216,4 +216,27 @@ public class FileDAO {
             return false;
         }
     }
-}
+    public static boolean update(FileModel file){
+try {
+            Connection conn = new Conexao().conectar();
+            PreparedStatement statement = conn.prepareStatement("update arquivos set nome = ?, caminho = ? where id = ?");
+            statement.setString(1, file.getNome());
+            statement.setString(2, file.getCaminho());
+            statement.setInt(3, file.getId());
+
+            boolean retorno = statement.execute();
+            System.out.println(retorno);
+            if (retorno == false) {
+                conn.close();
+                return true;
+            } else {
+                conn.close();
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+
+    }

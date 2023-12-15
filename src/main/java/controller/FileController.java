@@ -30,7 +30,7 @@ import model.UsuarioModel;
 import util.MailUtil;
 import util.SenhaUtil;
 
-@WebServlet(urlPatterns = {"/upload", "/download", "/deleteDocument", "/reprove", "/aprove"})
+@WebServlet(urlPatterns = {"/upload", "/download", "/deleteDocument", "/reprove", "/aprove", "/updateDocument"})
 public class FileController extends HttpServlet {
 
     public FileController() {
@@ -139,6 +139,8 @@ public class FileController extends HttpServlet {
             throws ServletException, IOException {
         String acao = request.getServletPath();
 
+
+
         if (acao.equals("/reprove")){
             int id = Integer.parseInt(request.getParameter("id"));
             String observacao = request.getParameter("observacao");
@@ -176,7 +178,69 @@ public class FileController extends HttpServlet {
             }
             request.getRequestDispatcher("authArea/confirm.jsp").forward(request, response);
         }
+        if (acao.equals("/updateDocument")) {
+            if (ServletFileUpload.isMultipartContent(request)) {
+                try {
+                    FileModel file = new FileModel();
+                    List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 
+                    String filename = null;
+                    FileItem fileItem = null;
+                    int id = 0;
+
+                    for (FileItem item : multiparts) {
+                        if (item.isFormField()) {
+                            if (item.getFieldName().equals("nome")) {
+                                filename = item.getString();
+                            } else if (item.getFieldName().equals("id")) {
+                                id = Integer.parseInt(item.getString());
+                            }
+                        } else {
+                            fileItem = item;
+                        }
+                    }
+
+                    if (filename == null) {
+                        throw new ServletException("Filename not provided");
+                    }
+
+                    file = FileDAO.buscarById(id);
+                    file.setNome(filename);
+
+
+                    if (fileItem != null && fileItem.getSize() > 0) {
+
+                        String path = getServletContext().getRealPath("authArea/files") + File.separator;
+                        String name = new File(fileItem.getName()).getName();
+                        String ext = name.substring(name.lastIndexOf("."));
+                        String newFileName = file.getToken() + ext;
+                        System.out.println("nomeee " + newFileName);
+                        fileItem.write(new File(path + newFileName));
+                        file.setCaminho("authArea/files" + "/" + newFileName);
+                    }
+
+                    boolean result = FileDAO.update(file);
+                    if (result) {
+                        request.setAttribute("message", "Arquivo Atualizado com Sucesso");
+                        request.setAttribute("title", "Atualização Bem Sucedida");
+                        request.setAttribute("success", true);
+                    } else {
+                        request.setAttribute("message", "Ocorreu um Erro na Atualização do Arquivo");
+                        request.setAttribute("title", "Atualização Falhou");
+                        request.setAttribute("success", false);
+                    }
+                    request.getRequestDispatcher("authArea/confirm.jsp").forward(request, response);
+                } catch (Exception ex) {
+                    request.setAttribute("message", "Ocorreu um Erro na Atualização do Arquivo");
+                    request.setAttribute("success", false);
+                    request.getRequestDispatcher("authArea/confirm.jsp").forward(request, response);
+                }
+            } else {
+                request.setAttribute("message", "Desculpe este Servlet lida apenas com pedido de upload de arquivos");
+                request.setAttribute("success", false);
+                request.getRequestDispatcher("authArea/confirm.jsp").forward(request, response);
+            }
+        }
         if (acao.equals("/upload")) {
 
             if (ServletFileUpload.isMultipartContent(request)) {
